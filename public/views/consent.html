@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthPoint - Authorization</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --surface: #111111;
+            --border: #333333;
+            --primary: #ffffff;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            font-size: 14px;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .container {
+            width: 80%;
+            padding: 2rem;
+            box-sizing: border-box;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 0.35rem;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-content {
+            max-width: 450px;
+            margin: 0 auto;
+            text-align: left;
+            background: #050505;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .info-row {
+            margin-bottom: 0.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222222;
+            padding-bottom: 0.6rem;
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .info-label {
+            font-weight: 500;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .info-value {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-main);
+            font-family: ui-monospace, monospace;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.8rem;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        button {
+            flex: 1;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 0;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .allow {
+            background: var(--primary);
+            color: #000000;
+        }
+
+        .allow:hover {
+            background: #cccccc;
+        }
+
+        .deny {
+            background: #111111;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .deny:hover {
+            background: #222222;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 80%;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            background: #0a0a0a;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            border-color: #555555;
+            background: #111111;
+        }
+
+        .nav-links a.active {
+            color: #000000;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-logo">AuthPoint</div>
+        <div class="nav-links">
+            <a href="/views/register.html">Register</a>
+            <a href="/views/login.html">Login</a>
+            <a href="/views/client-dashboard.html">Apps</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Authorize Application</h1>
+        <p class="subtitle">An external application requests access to your AuthPoint account</p>
+
+        <div class="form-content">
+            <div class="info-row">
+                <span class="info-label">Client ID</span>
+                <span class="info-value" id="clientId">Loading...</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Requested Scopes</span>
+                <span class="info-value" id="scopes">All</span>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="deny" onclick="deny()">Deny Access</button>
+            <button class="allow" onclick="authorize()">Allow Access</button>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        
+        // Immediate redirect if no session
+        if (!localStorage.getItem('sessionToken')) {
+            window.location.href = `/views/login.html?${params.toString()}`;
+        }
+
+        const clientId = params.get('client_id');
+        if (!clientId) {
+            document.body.innerHTML = `
+                <div class="container" style="text-align: center; border: 1px solid var(--border); padding: 4rem;">
+                    <h1 style="color: var(--primary);">OAuth Flow Error</h1>
+                    <p class="subtitle">This page cannot be accessed directly.</p>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">The Consent screen requires a valid request from an registered application.</p>
+                    <a href="/views/client-dashboard.html" style="color: var(--primary); text-decoration: none; border: 1px solid var(--primary); padding: 0.75rem 1.5rem; text-transform: uppercase; font-weight: bold;">Return to Dashboard</a>
+                </div>
+            `;
+        }
+
+        document.getElementById('clientId').textContent = clientId || 'MISSING';
+        document.getElementById('scopes').textContent = params.get('scope') || 'All';
+
+        async function authorize() {
+            const sessionToken = localStorage.getItem('sessionToken');
+            console.log('[authorize] Starting authorization...');
+            console.log('[authorize] sessionToken exists:', !!sessionToken);
+            
+            if (!sessionToken) {
+                console.warn('[authorize] No sessionToken found, redirecting to login');
+                window.location.href = `/views/login.html?${params.toString()}`;
+                return;
+            }
+
+            const bodyParams = {};
+            for (const [key, value] of params.entries()) {
+                bodyParams[key] = value;
+            }
+            bodyParams.sessionToken = sessionToken;
+
+            console.log('[authorize] Sending POST request to /authorize with:', {
+                client_id: bodyParams.client_id,
+                redirect_uri: bodyParams.redirect_uri,
+                scope: bodyParams.scope,
+                hasSessionToken: !!bodyParams.sessionToken
+            });
+
+            try {
+                const res = await fetch('/authorize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bodyParams)
+                });
+                
+                console.log('[authorize] Response status:', res.status);
+                console.log('[authorize] Response headers:', res.headers.get('content-type'));
+                
+                const responseText = await res.text();
+                console.log('[authorize] Raw response:', responseText.substring(0, 200));
+                
+                if (!res.ok) {
+                    console.error('Authorize error response:', responseText);
+                    try {
+                        const errorData = JSON.parse(responseText);
+                        alert('Authorization failed: ' + (errorData.error_description || errorData.error || `HTTP ${res.status}`));
+                    } catch {
+                        alert(`Authorization failed: Server returned HTTP ${res.status}\n\n${responseText.substring(0, 200)}`);
+                    }
+                    return;
+                }
+                
+                let data;
+                try {
+                    data = JSON.parse(responseText);
+                } catch (e) {
+                    console.error('Failed to parse response as JSON:', e, 'Response:', responseText.substring(0, 300));
+                    alert('Server returned invalid response format');
+                    return;
+                }
+                
+                console.log('[authorize] Success response:', data);
+                
+                if (data.redirect_url) {
+                    console.log('[authorize] Redirecting to:', data.redirect_url);
+                    window.location.href = data.redirect_url;
+                } else {
+                    console.error('No redirect_url in response:', data);
+                    alert('Authorization failed: Server did not return redirect URL');
+                }
+            } catch (err) {
+                console.error('[authorize] Network/parsing error:', err);
+                alert('Authorization failed: ' + err.message);
+            }
+        }
+
+        function deny() {
+            const redirectUri = params.get('redirect_uri');
+            if (redirectUri) {
+                window.location.href = `${redirectUri}?error=access_denied`;
+            } else {
+                alert('Access denied. No redirect URI present.');
+            }
+        }
+    </script>
+</body>
+</html>

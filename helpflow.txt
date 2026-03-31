@@ -1,0 +1,10 @@
+1. Login with admin@demo / Admin123!
+2. Go to APPS page
+3. Enter app name: "My Test App"
+4. Enter redirect URI: http://localhost:3000/callback
+5. Click "Register" → Get client_id + secret immediately ✅
+6. Switch to "Test Flow" tab
+7. Client ID is auto-populated (or paste it)
+8. Click "Start Authorization"
+9. Now at consent page (no manual URL copying!)
+10. Click "Allow Access" → Should redirect to callback successfully ✅

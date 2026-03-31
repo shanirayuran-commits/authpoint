@@ -1,0 +1,36 @@
+{
+  "name": "identitycore",
+  "version": "1.0.0",
+  "description": "AuthPoint OAuth 2.0 Authorization Server",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "reset-db": "node reset-db.js",
+    "deploy": "gh-pages -d public"
+  },
+  "dependencies": {
+    "@otplib/preset-default": "^12.0.1",
+    "argon2": "^0.44.0",
+    "body-parser": "^2.2.2",
+    "bs58": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "nanoid": "^5.1.7",
+    "node-forge": "^1.4.0",
+    "nodemon": "^3.1.14",
+    "otplib": "^13.4.0",
+    "pg": "^8.11.3",
+    "qrcode": "^1.5.4",
+    "speakeasy": "^2.0.0",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}

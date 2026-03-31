@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthPoint - OAuth Callback</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --surface: #111111;
+            --border: #333333;
+            --primary: #ffffff;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --success: #4ade80;
+            --error: #f87171;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        .navbar {
+            width: 80%;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 2rem;
+            box-sizing: border-box;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .info-block {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 0;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.6rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: var(--text-main);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+        }
+
+        .success-badge {
+            display: inline-block;
+            background: var(--success);
+            color: #000000;
+            padding: 0.35rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .error-badge {
+            display: inline-block;
+            background: var(--error);
+            color: #ffffff;
+            padding: 0.35rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .action-button {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: #000000;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 0.6rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        .action-button:hover {
+            background: #cccccc;
+        }
+
+        pre {
+            background: #000000;
+            padding: 1rem;
+            border-radius: 0;
+            overflow-x: auto;
+            color: #dddddd;
+            font-family: ui-monospace, monospace;
+            font-size: 0.7rem;
+            border: 1px solid var(--border);
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .spinner {
+            border: 1px solid var(--border);
+            border-top: 1px solid var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 0.6rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem;
+            border-bottom: 1px solid var(--border);
+            background: #050505;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-item-label {
+            font-weight: 600;
+            font-size: 0.81rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-width: 150px;
+        }
+
+        .info-item-value {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            flex: 1;
+            margin: 0 1.35rem;
+            word-break: break-all;
+        }
+
+        .copy-icon-btn {
+            background: #333333;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.675rem 0.9rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .copy-icon-btn:hover {
+            background: var(--primary);
+            color: #000000;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--success);
+            color: #000000;
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            background: #000000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--success);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-logo">AuthPoint</div>
+    </div>
+
+    <div class="container">
+        <h1>OAuth Callback</h1>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>Processing callback...</p>
+        </div>
+
+        <div id="success" style="display:none;">
+            <div class="success-badge">✓ Authorization Successful</div>
+            <div class="section-title">Authorization Code Received</div>
+            
+            <div class="info-block">
+                <div class="info-item">
+                    <span class="info-item-label">Authorization Code</span>
+                    <span class="info-item-value" id="codeValue">—</span>
+                    <button class="copy-icon-btn" onclick="copyToField('codeValue')">📋</button>
+                </div>
+                <div class="info-item">
+                    <span class="info-item-label">State Parameter</span>
+                    <span class="info-item-value" id="stateValue">—</span>
+                    <button class="copy-icon-btn" onclick="copyToField('stateValue')">📋</button>
+                </div>
+            </div>
+
+            <div class="section-title">Token Exchange Information</div>
+            <div class="info-block">
+                <div class="info-item">
+                    <span class="info-item-label">Redirect URI</span>
+                    <span class="info-item-value" id="redirectValue">—</span>
+                    <button class="copy-icon-btn" onclick="copyToField('redirectValue')">📋</button>
+                </div>
+                <div class="info-item">
+                    <span class="info-item-label">Grant Type</span>
+                    <span class="info-item-value">authorization_code</span>
+                    <button class="copy-icon-btn" onclick="copyText('authorization_code')">📋</button>
+                </div>
+            </div>
+
+            <div class="section-title">Next Steps</div>
+            <div class="info-block">
+                <p style="margin: 0.9rem; color: var(--text-muted); font-size: 0.81rem;">
+                    Click "Continue to Token Exchange" to complete the OAuth flow and get your access token.
+                </p>
+            </div>
+
+            <button class="action-button" onclick="continueToTokenExchange()">Continue to Token Exchange →</button>
+            <button class="action-button" style="background: #555555;" onclick="goHome()">Back to Dashboard</button>
+        </div>
+
+        <div id="error" style="display:none;">
+            <div class="error-badge">✗ Authorization Failed</div>
+            <div class="section-title">Error Details</div>
+            <div class="info-block">
+                <div class="info-row">
+                    <span class="info-label">Error Code</span>
+                    <span class="info-value" id="errorCode">—</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Description</span>
+                    <span class="info-value" id="errorDescription">—</span>
+                </div>
+            </div>
+            <button class="action-button" style="background: #555555;" onclick="goHome()">Back to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        function processCallback() {
+            const params = new URLSearchParams(window.location.search);
+            
+            if (params.has('error')) {
+                // Error case
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                
+                document.getElementById('errorCode').textContent = params.get('error') || 'UNKNOWN';
+                document.getElementById('errorDescription').textContent = params.get('error_description') || 'No additional information provided';
+            } else if (params.has('code')) {
+                // Success case
+                const code = params.get('code');
+                const state = params.get('state') || 'NOT PROVIDED';
+                const redirectUri = window.location.origin + '/callback';
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('success').style.display = 'block';
+                
+                document.getElementById('codeValue').textContent = code;
+                document.getElementById('stateValue').textContent = state;
+                document.getElementById('redirectValue').textContent = redirectUri;
+            } else {
+                // No code or error
+                document.getElementById('loading').innerHTML = '<p style="color: #f87171;">Invalid callback - missing authorization code or error parameter</p>';
+            }
+        }
+
+        function copyToField(fieldId) {
+            const element = document.getElementById(fieldId);
+            const text = element.textContent;
+            
+            if (!text || text === '—') {
+                showToast('Field is empty');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied to clipboard!');
+            }).catch(() => {
+                showToast('Failed to copy');
+            });
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied to clipboard!');
+            }).catch(() => {
+                showToast('Failed to copy');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="toast-icon">✓</div>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        function goHome() {
+            window.location.href = '/views/client-dashboard.html';
+        }
+
+        function continueToTokenExchange() {
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
+            const redirectUri = window.location.origin + '/callback';
+            
+            if (!code) {
+                showToast('No authorization code available');
+                return;
+            }
+            
+            console.log('Callback redirect_uri being sent:', redirectUri);
+            
+            // Navigate to oauth-test.html with code and redirect_uri as query params
+            window.location.href = `/views/oauth-test.html?code=${encodeURIComponent(code)}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+        }
+
+        // Process on page load
+        window.addEventListener('load', processCallback);
+    </script>
+</body>
+</html>

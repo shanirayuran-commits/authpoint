@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthPoint - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --surface: #111111;
+            --border: #333333;
+            --primary: #ffffff;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --success: #4ade80;
+            --error: #f87171;
+            --warning: #fbbf24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        .navbar {
+            width: 80%;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .nav-right span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--error);
+            background: transparent;
+            color: var(--error);
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: var(--error);
+            color: #000000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            background: #0a0a0a;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            border-color: #555555;
+            background: #111111;
+        }
+
+        .nav-links a.active {
+            color: #000000;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 2rem;
+            box-sizing: border-box;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.6rem;
+        }
+
+        .info-block {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+        }
+
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: var(--text-main);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            word-break: break-all;
+            max-width: 400px;
+        }
+
+        .copy-btn {
+            background: #333333;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.3rem 0.6rem;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: 0.6rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            color: #000000;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.active {
+            background: var(--success);
+            color: #000000;
+        }
+
+        .status-badge.inactive {
+            background: #555555;
+            color: #000000;
+        }
+
+        .action-button {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: #000000;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 0.6rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        .action-button:hover {
+            background: #cccccc;
+        }
+
+        .action-button.secondary {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .action-button.secondary:hover {
+            background: var(--primary);
+            color: #000000;
+        }
+
+        .message {
+            padding: 0.65rem 1rem;
+            border-radius: 0;
+            margin-bottom: 0.8rem;
+            font-size: 0.7rem;
+        }
+
+        .message.success {
+            background: var(--success);
+            color: #000000;
+        }
+
+        .message.error {
+            background: var(--error);
+            color: #ffffff;
+        }
+
+        .message.info {
+            background: var(--warning);
+            color: #000000;
+        }
+
+        #loading {
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .spinner {
+            border: 1px solid var(--border);
+            border-top: 1px solid var(--primary);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 0.6rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-logo">AuthPoint</div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="nav-links">
+                <a href="/views/dashboard.html" id="navDashboard">Dashboard</a>
+                <a href="/views/client-dashboard.html" id="navApps">Apps</a>
+            </div>
+            <div class="nav-right">
+                <span id="user-email"></span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Dashboard</h1>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>Loading your information...</p>
+        </div>
+
+        <div id="content" style="display:none;">
+            <div id="message"></div>
+
+            <div class="section">
+                <div class="section-title">Account Information</div>
+                <div class="info-block">
+                    <div class="info-row">
+                        <span class="info-label">User ID</span>
+                        <span class="info-value" id="user-id">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email</span>
+                        <span class="info-value" id="user-email-display">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Session Token</span>
+                        <div>
+                            <span class="info-value" id="session-token" style="display:none;">—</span>
+                            <button class="copy-btn" onclick="toggleToken()">Show</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Quick Actions</div>
+                <button class="action-button" onclick="navigateTo('/views/client-dashboard.html')">
+                    Register OAuth App
+                </button>
+                <button class="action-button secondary" onclick="logout()">
+                    Logout
+                </button>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Test OAuth Flow</div>
+                <div class="info-block">
+                    <p style="color: var(--text-muted); font-size: 0.81rem; margin: 0 0 1rem 0;">
+                        Use this session to test the complete OAuth 2.0 authorization flow.
+                    </p>
+                    <button class="action-button" onclick="navigateTo('/views/oauth-test.html')">
+                        Test OAuth Flow
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set active nav link based on current page
+        function setActiveNavLink() {
+            const currentPage = window.location.pathname;
+            const dashboardLink = document.getElementById('navDashboard');
+            const appsLink = document.getElementById('navApps');
+            
+            if (dashboardLink && appsLink) {
+                if (currentPage.includes('client-dashboard')) {
+                    appsLink.classList.add('active');
+                    dashboardLink.classList.remove('active');
+                } else if (currentPage.includes('dashboard')) {
+                    dashboardLink.classList.add('active');
+                    appsLink.classList.remove('active');
+                }
+            }
+        }
+
+        function checkAuth() {
+            const token = localStorage.getItem('sessionToken');
+            console.log('🔐 Checking auth on dashboard... Token exists:', !!token);
+            if (!token) {
+                console.log('❌ No token found, redirecting to login');
+                window.location.href = '/views/login.html';
+                return;
+            }
+            loadUserInfo();
+        }
+
+        async function loadUserInfo() {
+            try {
+                // Decode JWT to get user info (sub is the user ID)
+                const token = localStorage.getItem('sessionToken');
+                const parts = token.split('.');
+                const payload = JSON.parse(atob(parts[1]));
+                
+                console.log('✅ Token decoded, user:', payload.sub);
+                
+                document.getElementById('user-id').textContent = payload.sub;
+                document.getElementById('session-token').textContent = token;
+                
+                // Try to get full user info from userinfo endpoint
+                // (requires an access token, so we'll just show what we have)
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                
+                // Extract email from token or show placeholder
+                document.getElementById('user-email').textContent = 'User Dashboard';
+                document.getElementById('user-email-display').textContent = payload.email || 'Not available';
+                
+            } catch (err) {
+                console.error('❌ Error loading user info:', err);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            }
+        }
+
+        function toggleToken() {
+            const tokenEl = document.getElementById('session-token');
+            tokenEl.style.display = tokenEl.style.display === 'none' ? 'inline' : 'none';
+        }
+
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        function logout() {
+            console.log('🚪 Logging out');
+            localStorage.removeItem('sessionToken');
+            window.location.href = '/views/login.html';
+        }
+
+        // Check auth on page load
+        checkAuth();
+        setActiveNavLink();
+    </script>
+</body>
+</html>

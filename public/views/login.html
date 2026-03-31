@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthPoint - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --surface: #111111;
+            --border: #333333;
+            --primary: #ffffff;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            font-size: 14px;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        .container {
+            width: 80%;
+            padding: 2rem;
+            box-sizing: border-box;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 0.35rem;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-content {
+            max-width: 450px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.6rem;
+            background: #050505;
+            border: 1px solid var(--border);
+            border-radius: 0;
+            color: var(--text-main);
+            font-size: 0.75rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        input::placeholder {
+            color: #555555;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: #000000;
+            border: none;
+            border-radius: 0;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: inherit;
+            margin-top: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: #cccccc;
+        }
+
+        #msg {
+            margin-top: 0.8rem;
+            font-size: 0.75rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 80%;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.9rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.765rem;
+            font-weight: 600;
+            padding: 0.675rem 1.35rem;
+            border: 1px solid var(--border);
+            background: #0a0a0a;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            border-color: #555555;
+            background: #111111;
+        }
+
+        .nav-links a.active {
+            color: #000000;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-logo">AuthPoint</div>
+        <div class="nav-links" id="navLinks">
+            <a href="/views/register.html">Register</a>
+            <a href="/views/login.html" class="active">Login</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Login to AuthPoint</h1>
+        <p class="subtitle">Enter your credentials to continue</p>
+
+        <div class="form-content">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="name@example.com" />
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="••••••••" />
+            </div>
+            
+            <button id="loginBtn" onclick="login()">
+                Sign In
+            </button>
+            <p id="msg"></p>
+
+            <div style="text-align: center; margin-top: 1.35rem; font-size: 0.81rem; color: var(--text-muted);">
+                Don't have an account? <a href="/views/register.html" style="color: var(--primary); text-decoration: none;">Create one</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check login status on page load
+        function checkLoginStatus() {
+            const token = localStorage.getItem('sessionToken');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (token) {
+                navLinks.innerHTML = `
+                    <a href="/views/dashboard.html">Dashboard</a>
+                    <a href="/views/client-dashboard.html">Apps</a>
+                    <a href="#" onclick="logout(); return false;">Logout</a>
+                `;
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('sessionToken');
+            window.location.href = '/views/login.html';
+        }
+
+        window.addEventListener('load', checkLoginStatus);
+    </script>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        
+        async function login() {
+            const btn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const msgEl = document.getElementById('msg');
+            
+            if (!email || !password) {
+                msgEl.style.color = '#ffaaaa';
+                msgEl.textContent = 'Please provide both email and password.';
+                return;
+            }
+
+            btn.textContent = 'AUTHENTICATING...';
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
+            msgEl.textContent = '';
+            
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                console.log('📝 Login response:', { ok: res.ok, data });
+                
+                if (res.ok) {
+                    if (data.requireMfa) {
+                        // TODO: Handle MFA verification
+                        msgEl.style.color = '#ffaaaa';
+                        msgEl.textContent = 'MFA verification coming soon.';
+                    } else {
+                        console.log('✅ Login successful, storing token');
+                        localStorage.setItem('sessionToken', data.sessionToken);
+                        console.log('✅ Token stored in localStorage');
+                        
+                        if (params.get('client_id')) {
+                            msgEl.style.color = '#4ade80';
+                            msgEl.textContent = 'Redirecting to authorization...';
+                            setTimeout(() => {
+                                window.location.href = `/views/consent.html?${params.toString()}`;
+                            }, 500);
+                        } else {
+                            msgEl.style.color = '#4ade80';
+                            msgEl.textContent = 'Logged in successfully! Redirecting...';
+                            setTimeout(() => {
+                                window.location.href = '/views/dashboard.html';
+                            }, 500);
+                        }
+                    }
+                } else {
+                    console.log('❌ Login failed:', data.error);
+                    msgEl.style.color = '#ffaaaa';
+                    msgEl.textContent = data.error || 'Login Failed';
+                }
+            } catch (err) {
+                console.error('❌ Login error:', err);
+                msgEl.style.color = '#ffaaaa';
+                msgEl.textContent = 'An error occurred during login.';
+            } finally {
+                btn.textContent = 'SIGN IN';
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+    </script>
+</body>
+</html>

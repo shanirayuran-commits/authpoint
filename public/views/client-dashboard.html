@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuthPoint - App Configuration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --surface: #111111;
+            --border: #333333;
+            --primary: #ffffff;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --success: #4ade80;
+            --error: #f87171;
+            --warning: #fbbf24;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            font-size: 14px;
+        }
+
+        .navbar {
+            width: 80%;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            box-sizing: border-box;
+        }
+
+        .nav-logo {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .nav-right span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--error);
+            background: transparent;
+            color: var(--error);
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: var(--error);
+            color: #000000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            background: #0a0a0a;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+            border-color: #555555;
+            background: #111111;
+        }
+
+        .nav-links a.active {
+            color: #000000;
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            padding: 2rem;
+            box-sizing: border-box;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.6rem;
+        }
+
+        .info-block {
+            background: #0a0a0a;
+            border: 1px solid var(--border);
+            padding: 1rem;
+            margin-bottom: 0.8rem;
+            border-radius: 0;
+        }
+
+        .form-group {
+            margin-bottom: 0.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.6rem;
+            background: #050505;
+            border: 1px solid var(--border);
+            border-radius: 0;
+            color: var(--text-main);
+            font-size: 0.75rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        input::placeholder {
+            color: #555555;
+        }
+
+        .action-button {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary);
+            color: #000000;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 0.6rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        .action-button:hover {
+            background: #cccccc;
+        }
+
+        .message {
+            padding: 0.65rem 1rem;
+            border-radius: 0;
+            margin-bottom: 0.8rem;
+            font-size: 0.7rem;
+        }
+
+        .message.success {
+            background: var(--success);
+            color: #000000;
+        }
+
+        .message.error {
+            background: var(--error);
+            color: #ffffff;
+        }
+
+        #loading {
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .spinner {
+            border: 1px solid var(--border);
+            border-top: 1px solid var(--primary);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 0.9rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        pre {
+            background: #000000;
+            padding: 1.35rem;
+            border-radius: 0;
+            overflow-x: auto;
+            color: #dddddd;
+            font-family: ui-monospace, monospace;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            margin: 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-logo">AuthPoint</div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="nav-links">
+                <a href="/views/dashboard.html" id="navDashboard">Dashboard</a>
+                <a href="/views/client-dashboard.html" id="navApps">Apps</a>
+            </div>
+            <div class="nav-right">
+                <span>App Config</span>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>App Config</h1>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            <p>Loading your apps...</p>
+        </div>
+
+        <div id="content" style="display:none;">
+            <div id="message"></div>
+
+            <div class="section">
+                <div class="section-title">Register OAuth Application</div>
+                <div class="info-block">
+                    <div class="form-group">
+                        <label for="appName">App Name</label>
+                        <input type="text" id="appName" placeholder="e.g. My Custom App" autocomplete="off" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="redirectUri">Redirect URI</label>
+                        <input type="text" id="redirectUri" placeholder="e.g. http://localhost:8080/callback" autocomplete="off" />
+                    </div>
+                    
+                    <button class="action-button" id="registerBtn" onclick="registerApp()">
+                        Register Application
+                    </button>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Test OAuth Flow</div>
+                <div class="info-block">
+                    <p style="color: var(--text-muted); font-size: 0.81rem; margin: 0 0 1rem 0;">
+                        Test the complete OAuth 2.0 authorization flow with your registered applications.
+                    </p>
+                    <div class="form-group">
+                        <label for="clientId">Client ID</label>
+                        <input type="text" id="clientId" placeholder="Paste your client ID here" autocomplete="off" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testRedirectUri">Redirect URI</label>
+                        <input type="text" id="testRedirectUri" placeholder="e.g. http://localhost:3000/callback" autocomplete="off" />
+                    </div>
+                    
+                    <button class="action-button" id="startAuthBtn" onclick="startOAuth()">
+                        Start Authorization Flow
+                    </button>
+                </div>
+            </div>
+
+            <div id="result" class="section" style="display:none;">
+                <div class="section-title">Application Registered</div>
+                <div class="info-block">
+                    <pre id="output"></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set active nav link based on current page
+        function setActiveNavLink() {
+            const currentPage = window.location.pathname;
+            const dashboardLink = document.getElementById('navDashboard');
+            const appsLink = document.getElementById('navApps');
+            
+            if (dashboardLink && appsLink) {
+                if (currentPage.includes('client-dashboard')) {
+                    appsLink.classList.add('active');
+                    dashboardLink.classList.remove('active');
+                } else if (currentPage.includes('dashboard')) {
+                    dashboardLink.classList.add('active');
+                    appsLink.classList.remove('active');
+                }
+            }
+        }
+
+        // Check login status on page load
+        function checkLoginStatus() {
+            const token = localStorage.getItem('sessionToken');
+            console.log('🔐 Checking auth... Token exists:', !!token);
+            
+            if (!token) {
+                console.log('❌ No token found, redirecting to login');
+                window.location.href = '/views/login.html';
+            } else {
+                console.log('✅ Token found, showing content');
+                showContent();
+            }
+        }
+
+        function showContent() {
+            console.log('📄 Showing content, hiding loading');
+            const loading = document.getElementById('loading');
+            const content = document.getElementById('content');
+            if (loading) loading.style.display = 'none';
+            if (content) content.style.display = 'block';
+        }
+        
+        function logout() {
+            console.log('🚪 Logging out');
+            localStorage.removeItem('sessionToken');
+            window.location.href = '/views/login.html';
+        }
+
+        async function registerApp() {
+            const btn = document.getElementById('registerBtn');
+            const appName = document.getElementById('appName').value.trim();
+            const redirectUri = document.getElementById('redirectUri').value.trim();
+            const resultContainer = document.getElementById('result');
+            const output = document.getElementById('output');
+            
+            if (!appName || !redirectUri) {
+                document.getElementById('message').innerHTML = '<div class="message error">Please fill in both App Name and Redirect URI.</div>';
+                return;
+            }
+
+            btn.textContent = 'REGISTERING...';
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
+            
+            try {
+                const res = await fetch('/api/clients/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: appName, redirectUris: [redirectUri] })
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    const authLink = window.location.origin + `/authorize?response_type=code&client_id=${data.client_id}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=profile+email`;
+                    
+                    // Store credentials
+                    const credentials = JSON.parse(localStorage.getItem('credentials') || '[]');
+                    credentials.push({
+                        label: 'Client ID',
+                        value: data.client_id,
+                        timestamp: new Date().toLocaleTimeString()
+                    });
+                    credentials.push({
+                        label: 'Client Secret',
+                        value: data.client_secret,
+                        timestamp: new Date().toLocaleTimeString()
+                    });
+                    localStorage.setItem('credentials', JSON.stringify(credentials));
+                    
+                    output.textContent = `Client ID: ${data.client_id}\n\nClient Secret: ${data.client_secret}\n\nRedirect URI: ${data.redirect_uris[0]}\n\nAuth Link:\n${authLink}`;
+                    output.style.color = '#dddddd';
+                    resultContainer.style.display = 'block';
+                    
+                    document.getElementById('appName').value = '';
+                    document.getElementById('redirectUri').value = '';
+                    document.getElementById('message').innerHTML = '<div class="message success">Application registered successfully!</div>';
+                } else {
+                    output.textContent = `Error:\n${JSON.stringify(data, null, 2)}`;
+                    output.style.color = '#ffaaaa';
+                    resultContainer.style.display = 'block';
+                    document.getElementById('message').innerHTML = '<div class="message error">Failed to register application.</div>';
+                }
+            } catch (err) {
+                document.getElementById('message').innerHTML = '<div class="message error">An error occurred during registration.</div>';
+            } finally {
+                btn.textContent = 'REGISTER APPLICATION';
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+        }
+
+        function startOAuth() {
+            const clientId = document.getElementById('clientId').value.trim();
+            const redirectUri = document.getElementById('testRedirectUri').value.trim();
+            
+            if (!clientId || !redirectUri) {
+                document.getElementById('message').innerHTML = '<div class="message error">Please fill in both Client ID and Redirect URI.</div>';
+                return;
+            }
+
+            const authUrl = `/authorize?` +
+                `response_type=code&` +
+                `client_id=${encodeURIComponent(clientId)}&` +
+                `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+                `scope=profile+email`;
+            
+            window.location.href = authUrl;
+        }
+
+        window.addEventListener('load', function() {
+            console.log('⏱️ Page loaded, calling checkLoginStatus()');
+            checkLoginStatus();
+            setActiveNavLink();
+        });
+        
+        // Also call immediately in case load event already fired
+        if (document.readyState === 'loading') {
+            console.log('📄 Document still loading, will call on load event');
+        } else {
+            console.log('📄 Document already loaded, calling checkLoginStatus() immediately');
+            checkLoginStatus();
+        }
+    </script>
+</body>
+</html>

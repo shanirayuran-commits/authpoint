@@ -144,6 +144,5 @@ This project is licensed under the MIT License.
 <p align="center">
   AuthPoint Web Application
 </p>
-```
 
 ---

@@ -107,27 +107,27 @@ Go to:
   <br>
 
   <p align="center">
-    <img src="screenshots/register.png" width="850"/>
+    <img src="ss/register.png" width="850"/>
   </p>
   <p align="center"><i>User registration screen</i></p>
 
   <p align="center">
-    <img src="screenshots/login.png" width="850"/>
+    <img src="ss/login.png" width="850"/>
   </p>
   <p align="center"><i>User login screen</i></p>
 
   <p align="center">
-    <img src="screenshots/dashboard.png" width="850"/>
+    <img src="ss/dashboard.png" width="850"/>
   </p>
   <p align="center"><i>Main dashboard interface</i></p>
 
   <p align="center">
-    <img src="screenshots/appconfig.png" width="850"/>
+    <img src="ss/appconfig.png" width="850"/>
   </p>
   <p align="center"><i>Application configuration panel</i></p>
 
   <p align="center">
-    <img src="screenshots/testarea.png" width="850"/>
+    <img src="ss/testarea.png" width="850"/>
   </p>
   <p align="center"><i>Authentication testing area</i></p>
 

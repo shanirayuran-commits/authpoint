@@ -127,7 +127,7 @@ Go to:
   <p align="center"><i>Application configuration panel</i></p>
 
   <p align="center">
-    <img src="ss/testarea.png" width="850"/>
+    <img src="ss/testarea.jpeg" width="850"/>
   </p>
   <p align="center"><i>Authentication testing area</i></p>
 
